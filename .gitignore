@@ -4,3 +4,6 @@ xcuserdata/
 DerivedData/
 *.moved-aside
 *.pbxuser
+*.o
+test-device-load.dSYM/
+test-device-load
