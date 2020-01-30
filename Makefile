@@ -5,7 +5,6 @@ SOURCES=\
 	mediasoup-client-ios/src/Consumer.mm \
 	mediasoup-client-ios/src/Device.mm \
 	mediasoup-client-ios/src/Logger.mm \
-	mediasoup-client-ios/src/Mediasoupclient.mm \
 	mediasoup-client-ios/src/Producer.mm \
 	mediasoup-client-ios/src/RecvTransport.mm \
 	mediasoup-client-ios/src/SendTransport.mm \
@@ -16,7 +15,25 @@ SOURCES=\
 	mediasoup-client-ios/src/C++Wrapper/MediasoupclientWrapper.mm \
 	mediasoup-client-ios/src/C++Wrapper/ProducerWrapper.mm \
 	mediasoup-client-ios/src/C++Wrapper/TransportWrapper.mm \
-	mediasoup-client-ios/src/webrtc/RTCUtils.m
+	mediasoup-client-ios/src/webrtc/RTCUtils.m \
+	mediasoup-client-ios/src/Mediasoupclient.mm
+
+HEADERS=\
+	mediasoup-client-ios/include/Consumer.h \
+	mediasoup-client-ios/include/Device.h \
+	mediasoup-client-ios/include/Logger.h \
+	mediasoup-client-ios/include/Mediasoupclient.h \
+	mediasoup-client-ios/include/Producer.h \
+	mediasoup-client-ios/include/RecvTransport.h \
+	mediasoup-client-ios/include/SendTransport.h \
+	mediasoup-client-ios/include/Transport.h \
+	mediasoup-client-ios/include/wrapper/ConsumerWrapper.h \
+	mediasoup-client-ios/include/wrapper/DeviceWrapper.h \
+	mediasoup-client-ios/include/wrapper/LoggerWrapper.h \
+	mediasoup-client-ios/include/wrapper/MediasoupclientWrapper.h \
+	mediasoup-client-ios/include/wrapper/ProducerWrapper.h \
+	mediasoup-client-ios/include/wrapper/TransportWrapper.h \
+	mediasoup-client-ios/include/RTCUtils.h
 
 OBJECTS=$(SOURCES:.mm=.o) 
 OBJECTS+=$(SOURCES:.m=.o)
@@ -61,7 +78,7 @@ LDFLAGS = \
 
 all: $(ARCHIVE) $(TEST)
 
-$(ARCHIVE): $(OBJECTS)
+$(ARCHIVE): $(OBJECTS) $(HEADERS)
 	$(AR) r $(ARCHIVE) $(OBJECTS)
 
 

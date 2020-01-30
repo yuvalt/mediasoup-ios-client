@@ -88,15 +88,18 @@ public:
         
         NSValue * transportObject = [NSValue valueWithPointer:nativeTransport];
         SendTransport *sendTransport = [[SendTransport alloc] initWithNativeTransport:transportObject];
-        
-        auto result = [this->listener onProduce:sendTransport
-                            kind:[NSString stringWithUTF8String:kind.c_str()]
-                            rtpParameters:[NSString stringWithUTF8String:rtpParametersString.c_str()]
-                            appData:[NSString stringWithUTF8String:appDataString.c_str()]];
-        
-        std::promise<std::string> promise;
-        promise.set_value(std::string([result UTF8String]));
-        
+
+        __block std::promise<std::string> promise;
+
+        [this->listener onProduce:sendTransport
+                kind:[NSString stringWithUTF8String:kind.c_str()]
+                rtpParameters:[NSString stringWithUTF8String:rtpParametersString.c_str()]
+                appData:[NSString stringWithUTF8String:appDataString.c_str()]
+                callback:^(NSString* id) { 
+                    promise->set_value(std::string([id UTF8String]));
+                } 
+        ];
+                
         return promise.get_future();
     };
 };
