@@ -132,7 +132,7 @@
     return @"id";
 }
 
-- (void)onTransportClose:(Producer *)producer {
+- (void)onProducerTransportClose:(Producer *)producer {
     
 }
 

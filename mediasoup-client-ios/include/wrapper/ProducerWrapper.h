@@ -59,7 +59,7 @@ public:
     };
     
     void OnTransportClose(mediasoupclient::Producer *nativeProducer) override {
-        [this->listener onTransportClose:this->producer];
+        [this->listener onProducerTransportClose:this->producer];
     };
     
     void SetProducer(::Producer *producer) {

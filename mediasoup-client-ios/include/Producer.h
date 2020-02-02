@@ -69,7 +69,7 @@
     @brief Executed when the transport this producer belongs to is closed for whatever reason. The producer itself is also closed
     @param producer The producer instance executing this method
  */
--(void)onTransportClose:(Producer *)producer;
+-(void)onProducerTransportClose:(Producer *)producer;
 
 @end
 

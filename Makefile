@@ -1,5 +1,6 @@
 CC = clang
 CXX = clang++
+CP = cp
 
 SOURCES=\
 	mediasoup-client-ios/src/Consumer.mm \
@@ -87,6 +88,10 @@ $(TEST) :  $(TEST_CPP)
 
 clean: 
 	$(RM) $(OBJECTS) $(ARCHIVE)
+
+copy: 
+	$(CP) mediasoup-client-ios/include/*.h ../chill-mac/Frameworks/libmediasoup/include
+	$(CP) $(ARCHIVE) ../chill-mac/Frameworks/libmediasoup
 
 %.o     :   %.mm
 	$(CXX) $(CXXFLAGS) -o $@ -c $< 

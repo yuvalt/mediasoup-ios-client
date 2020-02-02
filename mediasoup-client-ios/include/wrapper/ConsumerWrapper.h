@@ -57,7 +57,7 @@ public:
     }
     
     void OnTransportClose(mediasoupclient::Consumer *nativeConsumer) override {
-        [this->listener onTransportClose:this->consumer];
+        [this->listener onConsumerTransportClose:this->consumer];
     };
     
     void SetConsumer(::Consumer *consumer) {

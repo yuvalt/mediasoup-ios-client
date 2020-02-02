@@ -99,7 +99,7 @@ RTCVideoTrack *videoTrack = [factory videoTrackWithSource:videoSource trackId:@"
 @end
 
 @implementation ProducerHandler
--(void)onTransportClose:(Producer *)producer {
+-(void)onProducerTransportClose:(Producer *)producer {
  NSLog(@"Producer::onTransportClose");
 }
 @end

@@ -96,7 +96,7 @@ public:
                 rtpParameters:[NSString stringWithUTF8String:rtpParametersString.c_str()]
                 appData:[NSString stringWithUTF8String:appDataString.c_str()]
                 callback:^(NSString* id) { 
-                    promise->set_value(std::string([id UTF8String]));
+                    promise.set_value(std::string([id UTF8String]));
                 } 
         ];
                 

@@ -124,8 +124,8 @@
     XCTAssertTrue([self.consumer isClosed]);
 }
 
--(void)onTransportClose:(Consumer *)consumer {
-    NSLog(@"onTransportClose");
+-(void)onConsumerTransportClose:(Consumer *)consumer {
+    NSLog(@"onConsumerTransportClose");
 }
 
 @end

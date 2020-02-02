@@ -123,8 +123,8 @@
     XCTAssertTrue([self.producer isClosed]);
 }
 
--(void)onTransportClose:(Producer *)producer {
-    NSLog(@"onTransportClose");
+-(void)onProducerTransportClose:(Producer *)producer {
+    NSLog(@"onProducerTransportClose");
 }
 
 @end
