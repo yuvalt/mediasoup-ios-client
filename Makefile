@@ -2,7 +2,7 @@ CC = clang
 CXX = clang++
 CP = cp
 
-SOURCES=\
+CXX_SOURCES=\
 	mediasoup-client-ios/src/Consumer.mm \
 	mediasoup-client-ios/src/Device.mm \
 	mediasoup-client-ios/src/Logger.mm \
@@ -16,8 +16,10 @@ SOURCES=\
 	mediasoup-client-ios/src/C++Wrapper/MediasoupclientWrapper.mm \
 	mediasoup-client-ios/src/C++Wrapper/ProducerWrapper.mm \
 	mediasoup-client-ios/src/C++Wrapper/TransportWrapper.mm \
-	mediasoup-client-ios/src/webrtc/RTCUtils.m \
-	mediasoup-client-ios/src/Mediasoupclient.mm
+	mediasoup-client-ios/src/Mediasoupclient.mm 
+
+C_SOURCES=\
+	mediasoup-client-ios/src/webrtc/RTCUtils.m 
 
 HEADERS=\
 	mediasoup-client-ios/include/Consumer.h \
@@ -36,8 +38,9 @@ HEADERS=\
 	mediasoup-client-ios/include/wrapper/TransportWrapper.h \
 	mediasoup-client-ios/include/RTCUtils.h
 
-OBJECTS=$(SOURCES:.mm=.o) 
-OBJECTS+=$(SOURCES:.m=.o)
+OBJECTS=$(CXX_SOURCES:.mm=.o) 
+OBJECTS+=$(C_SOURCES:.m=.o) 
+
 
 CCFLAGS=\
 	$(FLAGS)
@@ -49,7 +52,10 @@ CXXFLAGS=\
 OBJCFLAGS=$(FLAGS)
 
 FLAGS=\
-	-DWEBRTC_MAC -DWEBRTC_POSIX \
+	-DWEBRTC_MAC \
+	-DWEBRTC_POSIX \
+	-g \
+	-o0 \
 	-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk \
 	-I../libmediasoupclient/include \
 	-I../webrtc-checkout/src/sdk/objc/Framework/Headers \
@@ -80,7 +86,7 @@ LDFLAGS = \
 all: $(ARCHIVE) $(TEST)
 
 $(ARCHIVE): $(OBJECTS) $(HEADERS)
-	$(AR) r $(ARCHIVE) $(OBJECTS)
+	libtool -static -o $(ARCHIVE)  $(OBJECTS)
 
 
 $(TEST) :  $(TEST_CPP)
@@ -93,8 +99,8 @@ copy:
 	$(CP) mediasoup-client-ios/include/*.h ../chill-mac/Frameworks/libmediasoup/include
 	$(CP) $(ARCHIVE) ../chill-mac/Frameworks/libmediasoup
 
-%.o     :   %.mm
+%.o: %.mm
 	$(CXX) $(CXXFLAGS) -o $@ -c $< 
 
-%.o     :   %.m
+%.o: %.m
 	$(CC) $(CCFLAGS) -o $@ -c $< 
