@@ -11,6 +11,7 @@
 #import "Device.hpp"
 #import "Logger.hpp"
 #import "Transport.hpp"
+#import "Mediasoupclient.h"
 
 #import "wrapper/DeviceWrapper.h"
 #import "wrapper/TransportWrapper.h"
@@ -37,7 +38,7 @@ using namespace mediasoupclient;
     
     try {
         nlohmann::json routerRtpCapabilitiesJson = nlohmann::json::parse(std::string([routerRtpCapabilities UTF8String]));
-        reinterpret_cast<mediasoupclient::Device *>([nativeDevice pointerValue])->Load(routerRtpCapabilitiesJson);
+        reinterpret_cast<mediasoupclient::Device *>([nativeDevice pointerValue])->Load(routerRtpCapabilitiesJson, (mediasoupclient::PeerConnection::Options *) [Mediasoupclient peerConnectionOptions]);
     } catch (const std::exception &e) {
         MSC_ERROR("%s", e.what());
         NSString *message = [NSString stringWithUTF8String:e.what()];
@@ -98,7 +99,7 @@ using namespace mediasoupclient;
         const std::string iceParametersString = std::string([iceParameters UTF8String]);
         const std::string iceCandidatesString = std::string([iceCandidates UTF8String]);
         const std::string dtlsParametersString = std::string([dtlsParameters UTF8String]);
-        mediasoupclient::PeerConnection::Options* pcOptions = reinterpret_cast<mediasoupclient::PeerConnection::Options *>(options);
+        mediasoupclient::PeerConnection::Options* pcOptions = reinterpret_cast<mediasoupclient::PeerConnection::Options *>([Mediasoupclient peerConnectionOptions]);
         
         nlohmann::json appDataJson = nlohmann::json::object();
         if (appData != nullptr) {
@@ -129,7 +130,7 @@ using namespace mediasoupclient;
         const std::string iceCandidatesString = std::string([iceCandidates UTF8String]);
         const std::string dtlsParametersString = std::string([dtlsParameters UTF8String]);
         
-        mediasoupclient::PeerConnection::Options* pcOptions = reinterpret_cast<mediasoupclient::PeerConnection::Options *>(options);
+        mediasoupclient::PeerConnection::Options* pcOptions = reinterpret_cast<mediasoupclient::PeerConnection::Options *>([Mediasoupclient peerConnectionOptions]);
         
         nlohmann::json appDataJson = nlohmann::json::object();
         if (appData != nullptr) {

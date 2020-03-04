@@ -24,8 +24,9 @@
     @returns The libmediasoupclient version
  */
 +(NSString *)version;
++(void*)peerConnectionOptions;
 /*! @brief Initializes the libmediasoupclient, initializes libwebrtc */
-+(void)initializePC;
++(void)initializePCWithFactory:(RTCPeerConnectionFactory *)factory;
 /*! @brief libmediasoupclient cleanup, cleans up libwebrtc */
 +(void)cleanup;
 @end
