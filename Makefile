@@ -86,13 +86,13 @@ LDFLAGS = \
 	-framework CoreGraphics \
 	-stdlib=libc++ 
 
-all: $(ARCHIVE) $(TEST)
+all: $(ARCHIVE)
 
 $(ARCHIVE): $(OBJECTS) $(HEADERS)
 	libtool -static -o $(ARCHIVE)  $(OBJECTS)
 
 $(TEST) :  $(TEST_CPP)
-	$(CXX) -o $(TEST) -g $(TEST_CPP) $(CCFLAGS) $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) -o $(TEST) -g $(TEST_CPP) $(CCFLAGS) $(LDFLAGS)
 
 clean: 
 	$(RM) $(OBJECTS) $(ARCHIVE)
