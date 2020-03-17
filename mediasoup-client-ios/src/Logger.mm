@@ -9,7 +9,7 @@
 #import "Logger.h"
 #import "LoggerWrapper.h"
 
-@implementation Logger : NSObject
+@implementation GlobalLogger : NSObject
 
 +(void)setDefaultHandler {
     [LoggerWrapper nativeSetDefaultHandler];
