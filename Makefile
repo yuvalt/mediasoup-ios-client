@@ -1,6 +1,9 @@
 CC = clang
 CXX = clang++
 CP = cp
+SYSROOT ?= /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk
+ARCH ?= x86_64
+ARCHIVE ?= libmediasoup-objc.a
 
 CXX_SOURCES=\
 	mediasoup-client-ios/src/Consumer.mm \
@@ -56,7 +59,8 @@ FLAGS=\
 	-DWEBRTC_POSIX \
 	-g \
 	-o0 \
-	-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk \
+	-arch $(ARCH) \
+	-isysroot $(SYSROOT) \
 	-I../libmediasoupclient/include \
 	-I../webrtc-checkout/src/sdk/objc/Framework/Headers \
 	-I../webrtc-checkout/src/sdk/objc \
@@ -69,7 +73,6 @@ FLAGS=\
 
 OBJCLIBS=-framework WebRTC
 
-ARCHIVE = libmediasoup-objc.a
 
 TEST = test-device-load
 TEST_CPP = test-device-load.cpp
@@ -88,7 +91,6 @@ all: $(ARCHIVE) $(TEST)
 $(ARCHIVE): $(OBJECTS) $(HEADERS)
 	libtool -static -o $(ARCHIVE)  $(OBJECTS)
 
-
 $(TEST) :  $(TEST_CPP)
 	$(CXX) -o $(TEST) -g $(TEST_CPP) $(CCFLAGS) $(LDFLAGS)
 
@@ -98,6 +100,10 @@ clean:
 copy: 
 	$(CP) mediasoup-client-ios/include/*.h ../chill-mac/Frameworks/libmediasoup/include
 	$(CP) $(ARCHIVE) ../chill-mac/Frameworks/libmediasoup
+
+copy-ios: 
+	$(CP) mediasoup-client-ios/include/*.h ../chill-mac/Frameworks-ios/libmediasoup/include
+	$(CP) $(ARCHIVE) ../chill-mac/Frameworks-ios/libmediasoup
 
 %.o: %.mm
 	$(CXX) $(CXXFLAGS) -o $@ -c $< 
